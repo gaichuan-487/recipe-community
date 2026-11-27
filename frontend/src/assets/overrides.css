@@ -1,0 +1,5 @@
+/* Vue 挂载适配：App.vue 是多根组件，让它的子节点直接参与 body 的 flex 布局，
+   保留原版 body{display:flex} + main{flex:1 0 auto} 的页脚吸底效果。 */
+#app {
+  display: contents;
+}

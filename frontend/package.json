@@ -1,0 +1,22 @@
+{
+  "name": "shiguang-recipe-community-vue",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "食光记 · 美食菜谱分享社区（Vue 3 版）",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "publish": "npm run build && node scripts/publish.mjs"
+  },
+  "dependencies": {
+    "pinia": "^3.0.4",
+    "vue": "^3.5.46",
+    "vue-router": "^4.6.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.11",
+    "vite": "^8.4.0"
+  }
+}

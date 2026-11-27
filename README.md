@@ -18,6 +18,7 @@
 
 - **菜谱审核**：待审核队列、详情预览、通过 / 驳回（驳回需填写至少 5 字的修改建议，作者可在个人中心看到原因）。
 - **全部菜谱**：按状态筛选、搜索、查看与处理。
+- **用户管理**：按状态筛选与用户名/昵称搜索，查看作品与留言数量；可封禁 / 解封账号。封禁只暂停登录与写操作，已发布的菜谱和评论继续公开展示；封禁原因选填、仅后台可见。
 - **数据统计**：用户、菜谱、待审核、评论等总量，近 7 日发布趋势图，分类与标签分布，热门菜谱榜，最近待审核列表。图表带悬浮提示和无障碍数据表。
 
 ### 体验细节
@@ -37,13 +38,24 @@ npm install
 npm start
 ```
 
-浏览器打开 <http://localhost:3000>。
+浏览器打开 <http://localhost:3000>。默认提供的是 **Vue 3 版前端**，构建产物由 `frontend/` 生成并发布到 `public/`。
 
-开发时可使用自动重启：
+开发时可使用自动重启后端：
 
 ```bash
 npm run dev
 ```
+
+### Vue 前端开发
+
+```bash
+cd frontend
+npm install
+npm run dev        # http://localhost:5173，接口自动代理到 3000
+npm run publish    # 构建并发布到 public/，之后 npm start 即提供最新版本
+```
+
+旧版原生前端已完整备份在 `legacy-frontend/`，`public/` 只保留 Vue 构建产物、图片与上传目录。
 
 ## 演示账号
 
@@ -70,16 +82,19 @@ npm run dev
 
 ```
 recipe-community/
-├─ server.js              # Express 服务端、API、鉴权与审核逻辑
+├─ server.js              # Express 服务端、API、鉴权、审核与封禁逻辑
 ├─ lib/
 │  ├─ store.js            # JSON 数据读写（原子写入）
 │  └─ seed.js             # 首次启动的演示数据
-├─ public/
-│  ├─ index.html          # 单页应用外壳
-│  ├─ css/style.css       # 设计系统与全部页面样式
-│  ├─ js/app.js           # 路由、视图渲染与交互
+├─ frontend/              # Vue 3 前端源码（Vite + vue-router + Pinia）
+│  ├─ src/                # 页面、组件、状态与 API 封装
+│  └─ scripts/publish.mjs # 构建产物发布到 public/
+├─ public/                # 后端静态目录：Vue 构建产物 + 共享资源
+│  ├─ index.html          # Vue 入口（由 npm run publish 生成）
+│  ├─ assets/             # 带哈希的 JS / CSS（同上）
 │  ├─ images/             # 演示图片
 │  └─ uploads/            # 用户上传图片
+├─ legacy-frontend/       # 旧版原生前端备份（index.html + css/ + js/）
 ├─ data/
 │  ├─ db.json             # 运行数据（首次启动自动生成）
 │  └─ .secret             # 令牌签名密钥（自动生成）
